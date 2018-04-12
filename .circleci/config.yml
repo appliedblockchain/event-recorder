@@ -13,7 +13,7 @@ jobs:
       - restore_cache:
           key: node_modules-{{ checksum "package.json" }}
 
-      - run: npm i
+      - run: npm ci
 
       - save_cache:
           key: node_modules-{{ checksum "package.json" }}
