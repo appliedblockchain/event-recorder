@@ -19,3 +19,13 @@ test('record + eventually includes', async () => {
   expect(recorder.includes('foo', { foo: 2 })).toBeFalsy()
   expect(await recorder.eventuallyIncludes('foo', { foo: 2 })).toBeTruthy()
 })
+
+test('record + partial match', async () => {
+  setTimeout(() => {
+    recorder.record('foo', { foo: 2, bar: 3 })
+  }, 2 * 1000)
+  expect(recorder.includes('foo', { bar: 3 })).toBeFalsy()
+  expect(await recorder.eventuallyIncludes('foo', { bar: 3 })).toBeTruthy()
+  expect(recorder.includes('foo', { bar: 3 })).toBeTruthy()
+  expect(recorder.includes('foo', { bar: 2 })).toBeFalsy()
+})

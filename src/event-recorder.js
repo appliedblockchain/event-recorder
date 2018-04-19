@@ -1,6 +1,6 @@
 // @flow
 
-import { isEqual, isNil } from 'lodash'
+import { isMatch, isNil } from 'lodash'
 import Debug from 'debug'
 
 const debug = new Debug('event-recorder')
@@ -31,7 +31,7 @@ export default class EventRecorder {
     }
     for (let i = records.length - 1; i >= gteIndex; i--) {
       const record = records[i]
-      if (isEqual(record.event, event)) {
+      if (isMatch(record.event, event)) {
         return true
       }
     }
