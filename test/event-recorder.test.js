@@ -1,6 +1,7 @@
 // @flow
 
 import EventRecorder from '../src/event-recorder'
+import { get } from 'lodash'
 
 const recorder = new EventRecorder
 
@@ -28,4 +29,14 @@ test('record + partial match', async () => {
   expect(await recorder.eventuallyIncludes('foo', { bar: 3 })).toBeTruthy()
   expect(recorder.includes('foo', { bar: 3 })).toBeTruthy()
   expect(recorder.includes('foo', { bar: 2 })).toBeFalsy()
+})
+
+test('record + check with function', async () => {
+  setTimeout(() => {
+    recorder.record('foo', { nested: { foo: 2, bar: 3 } })
+  }, 2 * 1000)
+  expect(recorder.includes('foo', event => get(event, 'nested.bar') === 3)).toBeFalsy()
+  expect(await recorder.eventuallyIncludes('foo', event => get(event, 'nested.bar') === 3)).toBeTruthy()
+  expect(recorder.includes('foo', event => get(event, 'nested.bar') === 3)).toBeTruthy()
+  expect(recorder.includes('foo', event => get(event, 'nested.bar') === 2)).toBeFalsy()
 })
