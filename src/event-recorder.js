@@ -30,34 +30,42 @@ export default class EventRecorder {
     records.push({ at: Date.now(), event })
   }
 
-  includes(name: string, source: Source, gteIndex: number = 0): boolean {
+  // Returns first matching event or null.
+  first(name: string, source: Source, gteIndex: number = 0): any {
     const records = this.map.get(name)
     if (isNil(records)) {
-      return false
+      return null
     }
     for (let i = records.length - 1; i >= gteIndex; i--) {
       const record = records[i]
       if (isOk(record.event, source)) {
-        return true
+        return record.event
       }
     }
-    return false
+    return null
   }
 
-  async eventuallyIncludes(name: string, source: Source): Promise<boolean> {
+  async eventuallyFirst(name: string, source: Source, gteIndex: number = 0): Promise<any> {
     const timeout = Date.now() + 60 * 1000
     const probeEvery = 0.1 * 1000
-    let i = 0
-    let result = false
+    let i = gteIndex
+    let result = null
     while (Date.now() <= timeout) {
-      if (this.includes(name, source, i)) {
-        result = true
+      if (!isNil(result = this.first(name, source, i))) {
         break
       }
       i = (this.map.get(name) || []).length
       await new Promise(resolve => setTimeout(resolve, probeEvery))
     }
     return result
+  }
+
+  includes(name: string, source: Source, gteIndex: number = 0): boolean {
+    return !isNil(this.first(name, source, gteIndex))
+  }
+
+  async eventuallyIncludes(name: string, source: Source, gteIndex: number = 0): Promise<boolean> {
+    return !isNil(await this.eventuallyFirst(name, source, gteIndex))
   }
 
 }

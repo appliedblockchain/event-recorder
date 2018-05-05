@@ -40,3 +40,11 @@ test('record + check with function', async () => {
   expect(recorder.includes('foo', event => get(event, 'nested.bar') === 3)).toBeTruthy()
   expect(recorder.includes('foo', event => get(event, 'nested.bar') === 2)).toBeFalsy()
 })
+
+test('first + eventually first', async () => {
+  setTimeout(() => {
+    recorder.record('foo', { foo: 'xyz', bar: 'xyz' })
+  }, 2 * 1000)
+  expect(recorder.first('foo', { foo: 'xyz' })).toBeNull()
+  expect(await recorder.eventuallyFirst('foo', { foo: 'xyz' })).toEqual({ foo: 'xyz', bar: 'xyz' })
+})
