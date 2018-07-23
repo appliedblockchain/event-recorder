@@ -46,7 +46,8 @@ export default class EventRecorder {
   }
 
   async eventuallyFirst(name: string, source: Source, gteIndex: number = 0): Promise<any> {
-    const timeout = Date.now() + 60 * 1000
+    debug('eventuallyFirst', { name, source, gteIndex })
+    const timeout = Date.now() + (60 * 1000)
     const probeEvery = 0.1 * 1000
     let i = gteIndex
     let result = null
