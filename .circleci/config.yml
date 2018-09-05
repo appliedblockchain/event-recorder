@@ -1,33 +1,11 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/workspace
     docker:
-      - image: circleci/node:9
+      - image: circleci/node:10
     steps:
       - checkout
-
-      # Auth token for npm.
-      - run: echo "//registry.npmjs.org/:_authToken=$PRIVATE_NPM_TOKEN" > ~/.npmrc
-
-      - restore_cache:
-          key: node_modules-{{ checksum "package.json" }}
-
-      - run: npm i
-
-      - save_cache:
-          key: node_modules-{{ checksum "package.json" }}
-          paths:
-            - ./node_modules
-
+      - run: npm ci
       - run: npm run lint
       - run: npm run flow:check
-
       - run: npm test
-
-workflows:
-  version: 2
-  main:
-    jobs:
-      - build:
-          context: org-global

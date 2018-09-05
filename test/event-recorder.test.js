@@ -1,7 +1,7 @@
 // @flow
 
-import EventRecorder from '../src/event-recorder'
-import { get } from 'lodash'
+const EventRecorder = require('../')
+const { get } = require('lodash')
 
 const recorder = new EventRecorder
 

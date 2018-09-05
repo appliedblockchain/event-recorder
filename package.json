@@ -2,14 +2,9 @@
   "name": "@appliedblockchain/event-recorder",
   "version": "0.2.1",
   "description": "Event recorder simplifies evented/async tests.",
-  "main": "lib/event-recorder.js",
+  "main": "index.js",
   "scripts": {
-    "prepublish": "npm run build",
-    "build": "npm run build:clean && npm run build:lib && npm run build:flow",
-    "build:clean": "rm -rf lib",
-    "build:lib": "BABEL_ENV=production babel --source-maps -d lib src",
-    "build:flow": "flow-copy-source -v src lib",
-    "lint": "eslint src test",
+    "lint": "eslint .",
     "flow:check": "flow check",
     "test": "jest"
   },
@@ -18,27 +13,22 @@
   "license": "MIT",
   "devDependencies": {
     "@appliedblockchain/eslint-config": "^2.3.0",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.6",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-flow": "^6.23.0",
-    "eslint": "^5.2.0",
+    "eslint": "^5.5.0",
     "eslint-plugin-flowtype": "^2.50.0",
-    "flow-bin": "^0.77.0",
-    "flow-copy-source": "^2.0.2",
-    "jest": "^23.4.1"
+    "flow-bin": "^0.80.0",
+    "jest": "^23.5.0"
   },
   "dependencies": {
     "debug": "^3.1.0",
     "lodash": "^4.17.10"
   },
   "eslintConfig": {
-    "parser": "babel-eslint",
     "extends": "@appliedblockchain",
-    "plugins": [
-      "flowtype"
-    ]
-  }
+    "rules": {
+      "spaced-comment": 0
+    }
+  },
+  "eslintIgnore": [
+    "flow-typed/*"
+  ]
 }
