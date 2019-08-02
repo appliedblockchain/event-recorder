@@ -1,14 +1,16 @@
 // @flow
 
+const isMatch = require('lodash/isMatch')
+const isNil = require('lodash/isNil')
+const isFunction = require('lodash/isFunction')
+const Debug = require('debug')
+
 /*::
 
 type Record = { at: number, event: any }
 type Source = Object | Object => boolean
 
 */
-
-const { isMatch, isNil, isFunction } = require('lodash')
-const Debug = require('debug')
 
 const debug = new Debug('event-recorder')
 

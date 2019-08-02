@@ -4,23 +4,21 @@
   "description": "Event recorder simplifies evented/async tests.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
-    "flow:check": "flow check",
-    "test": "jest"
+    "test": "eslint . && flow check && jest"
   },
   "keywords": [],
   "author": "Mirek Rusin",
   "license": "MIT",
   "devDependencies": {
-    "@appliedblockchain/eslint-config": "^2.3.0",
-    "eslint": "^5.5.0",
-    "eslint-plugin-flowtype": "^2.50.0",
-    "flow-bin": "^0.80.0",
-    "jest": "^23.5.0"
+    "@appliedblockchain/eslint-config": "2.6.0",
+    "eslint": "6.1.0",
+    "eslint-plugin-flowtype": "3.12.2",
+    "flow-bin": "0.104.0",
+    "jest": "24.8.0"
   },
   "dependencies": {
-    "debug": "^3.1.0",
-    "lodash": "^4.17.10"
+    "debug": "4.1.1",
+    "lodash": "4.17.15"
   },
   "eslintConfig": {
     "extends": "@appliedblockchain",
