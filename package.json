@@ -1,6 +1,6 @@
 {
   "name": "@appliedblockchain/event-recorder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Event recorder simplifies evented/async tests.",
   "main": "index.js",
   "scripts": {
