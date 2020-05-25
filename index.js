@@ -1,7 +1,6 @@
 // @flow
 
 const isMatch = require('lodash/isMatch')
-const isNil = require('lodash/isNil')
 const isFunction = require('lodash/isFunction')
 const Debug = require('debug')
 
@@ -38,7 +37,7 @@ class EventRecorder {
   // Returns first matching event or null.
   first(name /*: string */, source /*: Source */, gteIndex /*:: ?: number */ = 0) /*: any */ {
     const records = this.map.get(name)
-    if (isNil(records)) {
+    if (!records) {
       return null
     }
     for (let i = records.length - 1; i >= gteIndex; i--) {
@@ -57,7 +56,7 @@ class EventRecorder {
     let i = gteIndex
     let result = null
     while (Date.now() <= timeout) {
-      if (!isNil(result = this.first(name, source, i))) {
+      if ((result = this.first(name, source, i))) {
         break
       }
       i = (this.map.get(name) || []).length
@@ -67,11 +66,11 @@ class EventRecorder {
   }
 
   includes(name /*: string */, source /*: Source */, gteIndex /*:: ?: number */ = 0) /*: boolean */ {
-    return !isNil(this.first(name, source, gteIndex))
+    return !!this.first(name, source, gteIndex)
   }
 
   async eventuallyIncludes(name /*: string */, source /*: Source */, gteIndex /*:: ?: number */ = 0) /*: Promise<boolean> */ {
-    return !isNil(await this.eventuallyFirst(name, source, gteIndex))
+    return !!(await this.eventuallyFirst(name, source, gteIndex))
   }
 
 }
